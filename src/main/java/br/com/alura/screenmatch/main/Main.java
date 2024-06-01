@@ -2,10 +2,15 @@ package br.com.alura.screenmatch.main;
 
 import br.com.alura.screenmatch.model.DadosSerie;
 import br.com.alura.screenmatch.model.DadosTemporada;
+import br.com.alura.screenmatch.model.Serie;
 import br.com.alura.screenmatch.service.ComsumoApi;
 import br.com.alura.screenmatch.service.ConverteDados;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
     private Scanner type = new Scanner(System.in);
@@ -75,6 +80,11 @@ public class Main {
     }
 
     private void listarSeriesBuscadas(){
-        dadosSeries.forEach(System.out::println);
+        List<Serie> series = dadosSeries.stream()
+                .map(d -> new Serie(d))
+                .collect(Collectors.toList());
+        series.stream()
+                .sorted(Comparator.comparing(Serie::getGenero))
+                .forEach(System.out::println);
     }
 }
